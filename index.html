@@ -1,9 +1,49 @@
-<!DOCTYPE HTML>
-<html>
+<!doctype html>
+<html ng-app>
   <head>
     <title>Really Simple Cards</title>
+    <link rel="stylesheet" href="main.css">
   </head>
-  <body>
-    Hello world.
+  <body ng-controller="cardsController">
+    <aside class="topics">
+      <h1>Selected Topics</h1>
+      <ol>
+        <li ng-repeat="topic in topics | filter:bySelectedTopics">
+          <label>
+            <input type="checkbox" ng-model="topic.selected">
+            {{topic.label}}
+          </label>
+        </li>
+      </ol>
+      <h1>All Topics</h1>
+      <section>
+        <form>
+          <input type="textbox" ng-model="topicFilter" placeholder="Filter topics...">
+        </form>
+      </section>
+      <ol>
+        <li ng-repeat="topic in topics | filter:topicFilter">
+          <label>
+            <input type="checkbox" ng-model="topic.selected">
+            {{topic.label}}
+            ({{cardCountByTopic(topic.id)}})
+          </label>
+        </li>
+      </ol>
+    </aside>
+    <section class="cards">
+      <h1>Cards</h1>
+      <ol>
+        <li class="card" ng-repeat="card in cards | filter:bySelectedTopics">
+          <article>
+            <h1>{{card.title}}</h1>
+            <p>Topic ID: {{card.topic_id}}
+            <p>Lorem ipsum doler sit amet</p>
+          </article>
+        </li>
+      </ol>
+    </section>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.8/angular.min.js"></script>
+    <script src="app.js"></script>
   </body>
 </html>
